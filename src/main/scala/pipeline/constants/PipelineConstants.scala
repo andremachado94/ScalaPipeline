@@ -1,0 +1,7 @@
+package pipeline.constants
+
+object PipelineConstants {
+  val METRICS_CODE_SUCCESS = "SUCCESS"
+  val METRICS_CODE_FAILURE = "FAILURE"
+  val METRICS_CODE_IMPLEMENTATION_ERROR = "IMPLEMENTATION_ERROR"
+}
