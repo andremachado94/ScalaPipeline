@@ -2,8 +2,6 @@ package pipeline
 
 import java.time.LocalDateTime
 
-import scala.reflect.ClassTag
-
 abstract class Block[I,O](numberOfInputs: Int) {
   def this(){
     this(-1)

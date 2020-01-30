@@ -3,7 +3,6 @@ package pipeline
 import pipeline.constants.PipelineConstants
 import java.time.LocalDateTime
 
-import scala.reflect.ClassTag
 
 case class BlockResult[T](result: Option[T], blockName: String, executionStartTime: LocalDateTime, exception: Option[Throwable] = None){
 
