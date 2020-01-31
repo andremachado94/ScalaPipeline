@@ -15,6 +15,10 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <scala.version>2.11.12</scala.version>
         <scala.major.version>2.11</scala.major.version>
+
+        <delta.version>0.5.0</delta.version>
+        <spark.version>2.4.2</spark.version>
+        <hadoop.version>2.9.2</hadoop.version>
     </properties>
 
     <repositories>
@@ -40,6 +44,35 @@
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>0.8.5</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_${scala.major.version}</artifactId>
+            <version>${spark.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_${scala.major.version}</artifactId>
+            <version>${spark.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.delta</groupId>
+            <artifactId>delta-core_${scala.major.version}</artifactId>
+            <version>${delta.version}</version>
         </dependency>
 
     </dependencies>
