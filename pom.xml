@@ -40,11 +40,11 @@
             <version>2.2.4</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>0.8.5</version>
-        </dependency>
+        </dependency-->
 
 
         <dependency>
