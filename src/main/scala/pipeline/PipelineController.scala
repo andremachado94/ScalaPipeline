@@ -55,10 +55,7 @@ private [pipeline] class PipelineController extends PipelineValidations {
   @throws(classOf[DisconnectedPipelineException])
   def execute(): Unit ={
     failIfNotFullyConnected(connections)
-    getFinishNodes.foreach(fn => {
-      val res = executeBlock(fn)
-      blockResults += (fn -> res)
-    })
+    getFinishNodes.foreach(executeBlock)
   }
 
   /** A recursive function that ....
@@ -70,22 +67,21 @@ private [pipeline] class PipelineController extends PipelineValidations {
     * @return a [[BlockResult]] that contains the result and metrics of the block execution
     */
   private def executeBlock[O](blockUid: Long): BlockResult[O] = {
-    val tb = blocks(blockUid)
-    val taggedBlock = tb.asInstanceOf[TaggedBlock[tb.tagI.type , tb.tagO.type ]]
+    val taggedBlock = blocks(blockUid)
     val currentBlock = taggedBlock.block.asInstanceOf[Block[taggedBlock.tagI.type, taggedBlock.tagO.type]]
+
     if(blockResults.contains(blockUid)) {
       println(s"Block $blockUid was already executed - skipping")
       blockResults(blockUid).asInstanceOf[BlockResult[O]]
     }
-    else
-      currentBlock.run(
-        getSourcesOfNode(blockUid).map(
-          sourceUid => {
-            val res = executeBlock(sourceUid).asInstanceOf[BlockResult[taggedBlock.tagI.type]]
-            blockResults += (sourceUid -> res)
-            res
+    else {
+      val result = currentBlock.run(
+        getSourcesOfNode(blockUid).map(executeBlock(_).asInstanceOf[BlockResult[taggedBlock.tagI.type]]): _*
+      ).asInstanceOf[BlockResult[O]]
 
-          }): _*).asInstanceOf[BlockResult[O]]
+      blockResults += (blockUid -> result)
+      result
+    }
   }
 
   /** Get the last nodes of the pipeline
